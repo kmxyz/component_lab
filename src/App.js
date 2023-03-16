@@ -15,10 +15,6 @@ class App extends Component {
     return "showing "+ this.state.movies +" movies in the database" ;
   }
 
-
-
-  /* good job 123*/
-
   showTabel = () =>{
     if(this.state.movies === 0 ){return ""};
     return <Movies />;
