@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.css';
+import Movies from './component/movies';
+import { getMovieLength } from './component/movies';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = { 
+    movies : getMovieLength(Movies)
+  } 
+
+  showMovies = () => {
+    if(this.state.movies === 0 ){return "These is no movie in the database"};
+    return "showing "+ this.state.movies +" movies in the database" ;
+  }
+
+  showTabel = () =>{
+    if(this.state.movies === 0 ){return ""};
+    return <Movies />;
+  }
+  render() { 
+    return (
+      <main className='container'>
+        
+        {this.showMovies()}
+
+        {this.showTabel()}
+      </main>
+    );
+  }
 }
-
+ 
 export default App;
