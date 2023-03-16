@@ -15,11 +15,13 @@ class App extends Component {
     return "showing "+ this.state.movies +" movies in the database" ;
   }
 
+
+  /* ok */
   showTabel = () =>{
     if(this.state.movies === 0 ){return ""};
     return <Movies />;
   }
-  
+
   render() { 
     return (
       <main className='container'>
