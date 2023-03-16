@@ -19,6 +19,7 @@ class App extends Component {
     if(this.state.movies === 0 ){return ""};
     return <Movies />;
   }
+  
   render() { 
     return (
       <main className='container'>
