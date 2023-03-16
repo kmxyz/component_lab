@@ -17,7 +17,7 @@ class App extends Component {
 
 
 
-  /* good job 1231232*/
+  /* good job */
 
   showTabel = () =>{
     if(this.state.movies === 0 ){return ""};
