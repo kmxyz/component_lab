@@ -3,15 +3,18 @@ import {getMovies} from './fakeMovieService';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 
-class movies extends Component {
-    state = { 
+var movieLength = getMovies().length
+class Movies extends Component {
+    state = {
         items : getMovies(),
         cal : ["Title", "Genre", "Stock", "Rate", "button"]
     }
 
     deleteMovie = (movie) => {
-        const movies = this.state.items.filter( (m) => m._id !== movie._id);
+        let movies = this.state.items.filter( (m) => m._id !== movie._id);
         this.setState({items : movies});
+        movieLength = movies.length;
+        getMovieData();
     }
 
     render() { 
@@ -20,7 +23,7 @@ class movies extends Component {
             <table className="table">
                 <thead>
                     <tr>
-                        {this.state.cal.map(cals => <th>{cals}</th>)}
+                        {this.state.cal.map(cal => <th>{cal}</th>)}
                     </tr>
                 </thead>
                 <tbody>
@@ -41,9 +44,8 @@ class movies extends Component {
     }
 }
 
-export function getMovieLength (m) {
-    console.log(m.state)
-    return m.state;
+export function getMovieData ( ) {
+    return movieLength;
 }
 
-export default movies;
+export default Movies;
