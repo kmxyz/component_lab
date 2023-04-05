@@ -3,11 +3,11 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 import Movies from './component/movies';
-import { getMovieLength } from './component/movies';
+import {getMovieData} from './component/movies'
 
 class App extends Component {
   state = { 
-    movies : getMovieLength(Movies)
+    movies : getMovieData()
   } 
 
   showMovies = () => {
