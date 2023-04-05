@@ -6,6 +6,7 @@ import 'font-awesome/css/font-awesome.css';
 class movies extends Component {
     state = { 
         items : getMovies(),
+        cal : ["Title", "Genre", "Stock", "Rate", "button"]
     }
 
     deleteMovie = (movie) => {
@@ -19,11 +20,7 @@ class movies extends Component {
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Genre</th>
-                        <th>Stock</th>
-                        <th>rate</th>
-                        <th>button</th>
+                        {this.state.cal.map(cals => <th>{cals}</th>)}
                     </tr>
                 </thead>
                 <tbody>
