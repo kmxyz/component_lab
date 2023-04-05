@@ -3,7 +3,6 @@ import {getMovies} from './fakeMovieService';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 
-var movieLength = getMovies().length
 class Movies extends Component {
     state = {
         items : getMovies(),
@@ -11,15 +10,16 @@ class Movies extends Component {
     }
 
     deleteMovie = (movie) => {
-        let movies = this.state.items.filter( (m) => m._id !== movie._id);
+        const movies = this.state.items.filter( (m) => m._id !== movie._id);
         this.setState({items : movies});
-        movieLength = movies.length;
-        getMovieData();
     }
 
     render() { 
+        const { items: count } = this.state;
+        if (count.length === 0 ){return "there is no moive in the database."}
         return (
-            
+            <React.Fragment>
+            <p>Showing {count.length} moives in the database</p>
             <table className="table">
                 <thead>
                     <tr>
@@ -39,13 +39,9 @@ class Movies extends Component {
                 </tbody>
             </table>
 
-            
+            </React.Fragment>
         );
     }
-}
-
-export function getMovieData ( ) {
-    return movieLength;
 }
 
 export default Movies;
