@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { getMovies } from "./fakeMovieService";
-import "bootstrap/dist/css/bootstrap.css";
-import "font-awesome/css/font-awesome.css";
+import { getMovies } from "../data/fakeMovieService";
 import Like from "./like";
 
 class Movies extends Component {
   state = {
     items: getMovies(),
-    cal: ["Title", "Genre", "Stock", "Rate", "like", "button"],
+    cal: ["Title", "Genre", "Stock", "Rate", "", "  "],
   };
 
   deleteMovie = (movie) => {
