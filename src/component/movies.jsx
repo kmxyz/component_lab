@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { getMovies } from "../data/fakeMovieService";
 import Like from "./like";
+import Pagination from "./pagination";
+import { paginate } from "../utils/pagination";
 
 class Movies extends Component {
   state = {
     items: getMovies(),
     cal: ["Title", "Genre", "Stock", "Rate", "", "  "],
+    maxItemsInOnePage: 4,
+    currentlyPage: 1,
   };
 
   deleteMovie = (movie) => {
@@ -21,24 +25,30 @@ class Movies extends Component {
     this.setState({ items: movies });
   };
 
+  headleOnClickPagination = (page) => {
+    this.setState({ currentlyPage: page });
+  };
+
   render() {
-    const { items } = this.state;
+    const { items, cal, maxItemsInOnePage, currentlyPage } = this.state;
     if (items.length === 0) {
       return "there is no moive in the database.";
     }
+    const allMovies = paginate(items, currentlyPage, maxItemsInOnePage);
+
     return (
       <React.Fragment>
         <p>Showing {items.length} moives in the database</p>
         <table className="table">
           <thead>
             <tr>
-              {this.state.cal.map((cal) => (
+              {cal.map((cal) => (
                 <th key={cal}>{cal}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {this.state.items.map((item) => (
+            {allMovies.map((item) => (
               <tr key={item._id}>
                 <td>{item.title}</td>
                 <td>{item.genre.name}</td>
@@ -62,6 +72,12 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
+        <Pagination
+          maxItemsInOnePage={maxItemsInOnePage}
+          currentlyPage={currentlyPage}
+          totalItems={items.length}
+          onClicked={this.headleOnClickPagination}
+        />
       </React.Fragment>
     );
   }
