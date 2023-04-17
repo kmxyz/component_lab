@@ -8,7 +8,7 @@ class App extends Component {
   state = {};
   render() {
     return (
-      <main className="container">
+      <main className="container m-4">
         <Movies />
       </main>
     );
