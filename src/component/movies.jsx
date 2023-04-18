@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { getMovies } from "../data/fakeMovieService";
-import Like from "./like";
 import Pagination from "./pagination";
 import { paginate } from "../utils/pagination";
 import { getGenres } from "../data/fakeGenreService";
 import Genre from "./genres";
+import MovieTable from "./movieTable";
 
 class Movies extends Component {
   state = {
@@ -32,6 +32,9 @@ class Movies extends Component {
     movies[index] = { ...movie };
     movies[index].like = !movies[index].like;
     this.setState({ items: movies });
+    if (movies[index].like === true) {
+      alert("Add like success !");
+    }
   };
 
   headleOnClickPagination = (page) => {
@@ -66,40 +69,13 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <p>Showing {filter.length} moives in the database</p>
-          <table className="table">
-            <thead>
-              <tr>
-                {cal.map((cal) => (
-                  <th key={cal}>{cal}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {allMovies.map((item) => (
-                <tr key={item._id}>
-                  <td>{item.title}</td>
-                  <td>{item.genre.name}</td>
-                  <td>{item.numberInStock}</td>
-                  <td>{item.dailyRentalRate}</td>
-                  <td>
-                    <Like
-                      like={item.like}
-                      onClicked={() => this.headleOnClick(item)}
-                    />
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => this.deleteMovie(item)}
-                      className="btn btn-danger btn-sm"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <MovieTable
+            filter={filter}
+            cal={cal}
+            allMovies={allMovies}
+            onHeadleOnClick={this.headleOnClick}
+            onDeleteMovie={this.deleteMovie}
+          />
           <Pagination
             maxItemsInOnePage={maxItemsInOnePage}
             currentlyPage={currentlyPage}
