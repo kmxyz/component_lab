@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 const Genre = (props) => {
   return (
-    <ul className="list-group">
+    <ul className="list-group text-center">
       {props.genreData.map((data) => (
         <li
           className={
