@@ -8,12 +8,18 @@ import Genre from "./genres";
 
 class Movies extends Component {
   state = {
-    genreData: getGenres(),
-    items: getMovies(),
+    selectG: null,
+    genreData: [],
+    items: [],
     cal: ["Title", "Genre", "Stock", "Rate", "", "  "],
     maxItemsInOnePage: 4,
     currentlyPage: 1,
   };
+
+  componentDidMount() {
+    const allGenre = [{ name: "All Genre" }, ...getGenres()];
+    this.setState({ items: getMovies(), genreData: allGenre });
+  }
 
   deleteMovie = (movie) => {
     const movies = this.state.items.filter((m) => m._id !== movie._id);
@@ -32,21 +38,35 @@ class Movies extends Component {
     this.setState({ currentlyPage: page });
   };
 
+  headleOnClickG = (genre) => {
+    this.setState({ selectG: genre, currentlyPage: 1 });
+  };
+
   render() {
-    const { items, cal, maxItemsInOnePage, currentlyPage, genreData } =
+    const { items, cal, maxItemsInOnePage, currentlyPage, genreData, selectG } =
       this.state;
     if (items.length === 0) {
       return "there is no moive in the database.";
     }
-    const allMovies = paginate(items, currentlyPage, maxItemsInOnePage);
+
+    const filter =
+      selectG && selectG._id
+        ? items.filter((m) => m.genre._id === selectG._id)
+        : items;
+
+    const allMovies = paginate(filter, currentlyPage, maxItemsInOnePage);
 
     return (
       <div className="row">
         <div className="col-3 m-5">
-          <Genre genreData={genreData} />
+          <Genre
+            genreData={genreData}
+            onClickedG={this.headleOnClickG}
+            selectG={selectG}
+          />
         </div>
         <div className="col">
-          <p>Showing {items.length} moives in the database</p>
+          <p>Showing {filter.length} moives in the database</p>
           <table className="table">
             <thead>
               <tr>
@@ -83,7 +103,7 @@ class Movies extends Component {
           <Pagination
             maxItemsInOnePage={maxItemsInOnePage}
             currentlyPage={currentlyPage}
-            totalItems={items.length}
+            totalItems={filter.length}
             onClicked={this.headleOnClickPagination}
           />
         </div>
